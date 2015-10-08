@@ -1,0 +1,3 @@
+---
+hadoop__version: 2.7.0
+hadoop__tar_url: http://www.eu.apache.org/dist/hadoop/common/hadoop-{{hadoop__version}}/hadoop-{{hadoop__version}}.tar.gz

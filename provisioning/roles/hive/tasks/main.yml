@@ -1,0 +1,26 @@
+---
+
+- name: download hive tar ball
+  get_url: dest=/tmp url={{hive__tar_url}}
+
+- name: unarchive the tar ball to /opt
+  unarchive: >
+    src="/tmp/{{hive__tar_url | basename }}"
+    dest=/opt/
+
+- name: make a symlink to the hive directory
+  file: src="/opt/{{hive__tar_url | basename | replace('.tar.gz', '')}}" dest=/opt/hive state=link force=no
+
+- name: make hive user
+  user: name=hive
+
+- name: make directories for hive
+  file: path=/hive/warehouse state=directory owner=hive group=hive
+
+- name: put mysql jdbc library into classpath of hive
+  file: src=/usr/share/java/mysql-connector-java.jar dest=/opt/hive/lib/libmysql-java.jar state=link
+
+- name: put configuration files
+  copy: src={{item}} dest=/opt/hive/conf/{{item}}
+  with_items:
+    - hive-site.xml

@@ -1,0 +1,30 @@
+---
+
+- name: download hbase tar ball
+  get_url: dest=/tmp url={{hbase__tar_url}}
+
+- name: unarchive the tar ball to /opt
+  unarchive: >
+    src="/tmp/{{hbase__tar_url | basename }}"
+    dest=/opt/
+
+- name: make a symlink to the hbase directory
+  file: src="/opt/hbase-{{hbase__version}}" dest=/opt/hbase state=link force=no
+
+- name: make hbase user
+  user: name=hbase home=/opt/hbase generate_ssh_key=yes
+
+- name: make directories required by hbase
+  file: path={{item}} state=directory owner=hbase group=hbase
+  with_items:
+    - /hbase
+    - /hbase_zookeeper
+    - /opt/hbase/logs
+
+- name: put configuration files
+  copy: src={{item}} dest=/opt/hbase/conf/{{item}}
+  with_items:
+    - hbase-site.xml
+
+- name: export JAVA_HOME
+  lineinfile: dest=/opt/hbase/conf/hbase-env.sh line='export JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre'

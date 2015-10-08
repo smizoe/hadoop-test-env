@@ -1,0 +1,3 @@
+---
+hive__version: 1.2.1
+hive__tar_url: http://www.trieuvan.com/apache/hive/stable/apache-hive-{{hive__version}}-bin.tar.gz

@@ -1,0 +1,31 @@
+---
+
+- name: download hadoop tar ball
+  get_url: dest=/tmp url={{hadoop__tar_url}}
+
+- name: unarchive the tar ball to /opt
+  unarchive: >
+    src="/tmp/{{hadoop__tar_url | basename }}"
+    dest=/opt/
+
+- name: make a symlink to the hadoop directory
+  file: src="/opt/{{hadoop__tar_url | basename | replace('.tar.gz', '')}}" dest=/opt/hadoop state=link force=no
+
+- name: make users dedicated to hdfs and yarn
+  user: name={{item}}
+  with_items:
+    - hdfs
+    - yarn
+
+- name: make hadoop log directories
+  file: path=/opt/hadoop/logs state=directory mode=1777
+
+- name: put configuration files
+  copy: src={{item}} dest=/opt/hadoop/etc/hadoop/{{item}}
+  with_items:
+    - core-site.xml
+    - hdfs-site.xml
+    - yarn-site.xml
+
+- name: export JAVA_HOME
+  lineinfile: dest=/opt/hadoop/etc/hadoop/hadoop-env.sh line='export JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre'
