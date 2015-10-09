@@ -14,9 +14,6 @@
 - name: make hive user
   user: name=hive
 
-- name: make directories for hive
-  file: path=/hive/warehouse state=directory owner=hive group=hive
-
 - name: put mysql jdbc library into classpath of hive
   file: src=/usr/share/java/mysql-connector-java.jar dest=/opt/hive/lib/libmysql-java.jar state=link
 
