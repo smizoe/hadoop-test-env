@@ -9,10 +9,10 @@
     dest=/opt/
 
 - name: make a symlink to the hbase directory
-  file: src="/opt/hbase-{{hbase__version}}" dest=/opt/hbase state=link force=no
+  file: src="/opt/hbase-{{hbase__version}}-hadoop2" dest=/opt/hbase state=link force=no
 
 - name: make hbase user
-  user: name=hbase home=/opt/hbase generate_ssh_key=yes
+  user: name=hbase home=/opt/hbase generate_ssh_key=yes createhome=no
 
 - name: make directories required by hbase
   file: path={{item}} state=directory owner=hbase group=hbase
