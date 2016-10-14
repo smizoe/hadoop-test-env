@@ -25,6 +25,5 @@ while getopts "i:v:d:" OPT ; do
       ;;
   esac
 done
-eval "$(docker-machine env ${VM_NAME})"
 docker build -t ${IMG_NAME} .
 docker run ${DOCKER_OPTS} -it ${IMG_NAME}

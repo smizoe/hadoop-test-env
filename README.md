@@ -7,6 +7,5 @@ that builds a docker image with hadoop environment (hadoop, hive, hbase) install
 You can build an image and attach to a container by running:
 
 ```
-$ docker-machine create --driver virtualbox dev
-$ ./run.sh # by default, this creates a image named 'hadoop_test_env' on vm 'dev'
+$ ./run.sh # by default, this creates a image named 'hadoop_test_env'
 ```
