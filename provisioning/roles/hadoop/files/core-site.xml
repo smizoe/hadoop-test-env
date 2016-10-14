@@ -3,4 +3,8 @@
         <name>fs.defaultFS</name>
         <value>hdfs://localhost:8020</value>
     </property>
+    <property>
+        <name>dfs.namenode.rpc-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
 </configuration>
