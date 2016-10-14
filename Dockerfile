@@ -22,4 +22,5 @@ RUN sudo service ssh start && sudo su -l hbase -c "ssh -o BatchMode=yes -o Stric
 RUN sudo su -l hdfs -c  'JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre /opt/hadoop/bin/hdfs namenode -format'
 RUN sudo service mysql start && /opt/hive/bin/schematool -initSchema -dbType=mysql
 ADD ./start-hadoop.sh /home/ansible/
+EXPOSE 50010 50075 50020 8020 50070 8088 8033 8031
 ENTRYPOINT sudo /home/ansible/start-hadoop.sh && . /etc/profile.d/*.sh && bash

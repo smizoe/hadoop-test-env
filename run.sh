@@ -2,8 +2,11 @@
 set -eu
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 IMG_NAME="hadoop_test_env"
-VM_NAME="dev"
 DOCKER_OPTS=""
+for port in 50010 50075 50020 8020 50070 8088 8033 8031
+do
+    DOCKER_OPTS="${DOCKER_OPTS} -p ${port}:${port}"
+done
 
 while getopts "i:v:d:" OPT ; do
   case ${OPT} in
